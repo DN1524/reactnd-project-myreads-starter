@@ -160,8 +160,13 @@ body, .app {
   opacity: 0;
   cursor: pointer;
 }
-
 /* book cover */
+
+.book-shelf-state {
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 15px;
+}
 
 .book-cover {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);

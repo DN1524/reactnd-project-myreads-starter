@@ -1,14 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
-import Book from './Book'
-import * as BooksAPI from '../BooksAPI'
+import { Link } from 'react-router-dom';
+import { debounce } from 'lodash';
+import Book from './Book';
+import * as BooksAPI from '../BooksAPI';
+
 
 class SearchPage extends React.Component {
-	state = {
-		books: [],
-		results: [],
-		query: ''
-	}
+		state = {
+			books: [],
+			results: [],
+			query: ''
+		}
 
 	componentDidMount() {
 		// Grabs all books from the BooksAPI and changes the
@@ -20,15 +22,16 @@ class SearchPage extends React.Component {
 	}
 	// Allows users to add books from the SearchPage into
 	// any of the three shelves in the MainPage.
-	changeShelf = (book, shelf) => {
-		BooksAPI.update(book, shelf)
-		.then(() => {
-			book.shelf = shelf;
-			this.setState(state => ({
-				books: state.books
-			}))
-		})
-	}
+	// changeShelf = (book, shelf) => {
+	// 	BooksAPI.update(book, shelf) 
+	// 	// Allows the books to dynamically change shelves
+	// 	book.shelf = shelf;
+	// 	this.setState(state => ({
+	// 		books: this.state.books
+	// 		.filter(b => b.id !== book.id)
+	// 		.concat(book)
+	// 	}))
+	// }
 
 	updateQuery = (query) => {
 		// Calls startSearch() to update the search results
@@ -39,7 +42,7 @@ class SearchPage extends React.Component {
 		)
 	}
 
-	startSearch = () => {
+	startSearch = debounce(() => {
 		const query = this.state.query
 
 		if (query === "" || query === undefined) {
@@ -56,7 +59,7 @@ class SearchPage extends React.Component {
 				this.setState({ results: result })
 			}
 		})
-	}
+	}, 400)
 
 	render() {
 		return (
@@ -68,16 +71,16 @@ class SearchPage extends React.Component {
             	type="text" 
             	placeholder="Search by title or author" 
             	value={this.state.query}
-            	onChange={(e) => this.updateQuery(e.target.value)}
+            	onChange={e => this.updateQuery(e.target.value)}
             />
           </div>
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
           	{this.state.results.map((book, key) => 
-          		<Book 
-          			changeShelf={this.changeShelf} 
-          			book={book} 
+          		<Book
+          			changeShelf={this.props.changeShelf}
+          			book={book}
           			key={key} 
           		/>
           	)}

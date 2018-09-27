@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { PureComponent }  from 'react';
 
-class Book extends React.Component {
+class Book extends PureComponent {
 	render() {
 		return (
 			<li>
@@ -14,11 +14,10 @@ class Book extends React.Component {
           		height: 193, 
           		backgroundImage: `url(${this.props.book.imageLinks && this.props.book.imageLinks.thumbnail || ""})` }}>
           </div>
-
           <div className="book-shelf-changer">
             <select
             	value={this.props.book.shelf}
-            	onChange={(e) => this.props.changeShelf(
+            	onChange={e => this.props.changeShelf(
             		this.props.book, e.target.value
             	)}
             >

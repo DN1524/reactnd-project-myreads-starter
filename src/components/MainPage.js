@@ -8,26 +8,24 @@ class MainPage extends React.Component {
 		books: []
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
+		const books = await BooksAPI.getAll()
 		// Grabs all books from the BooksAPI and changes the
 		// state so that the books show
-		BooksAPI.getAll()
-			.then(book => {
-				this.setState({ books: book })
-		})
+		this.setState({ books })
 	}
 
-	changeShelf = (book, shelf) => {
-		// Calls the update function from the BooksAPI
-		BooksAPI.update(book, shelf)
-		.then(() => {
-			// Allows the books to dynamically change shelves
-			book.shelf = shelf;
-			this.setState(state => ({
-				books: state.books
-			}))
-		})
-	}
+	// changeShelf = (book, shelf) => {
+	// 	// Calls the update function from the BooksAPI
+	// 	BooksAPI.update(book, shelf)
+	// 	// Allows the books to dynamically change shelves
+	// 	book.shelf = shelf;
+	// 	this.setState(state => ({
+	// 		books: this.state.books
+	// 		.filter(b => b.id !== book.id)
+	// 		.concat(book)
+	// 	}))
+	// }
 
 	render() {
 		return (
@@ -37,13 +35,14 @@ class MainPage extends React.Component {
         </div>
         <div className="list-books-content">
           <div>
-            <Shelf changeShelf={this.changeShelf} name="Currently Reading" books={this.state.books.filter(b => b.shelf === "currentlyReading")}/>
-            <Shelf changeShelf={this.changeShelf} name="Want to Read" books={this.state.books.filter(b => b.shelf === "wantToRead")}/>
-            <Shelf changeShelf={this.changeShelf} name="Read" books={this.state.books.filter(b => b.shelf === "read")}/>
+            <Shelf changeShelf={this.props.changeShelf} name="Currently Reading" books={this.state.books.filter(b => b.shelf === "currentlyReading")}/>
+            <Shelf changeShelf={this.props.changeShelf} name="Want to Read" books={this.state.books.filter(b => b.shelf === "wantToRead")}/>
+            <Shelf changeShelf={this.props.changeShelf} name="Read" books={this.state.books.filter(b => b.shelf === "read")}/>
           </div>
+          {console.log(this.props)}
         </div>
         <div className="open-search">
-          <Link to="/search">Add a book</Link>
+          <Link to="/search"></Link>
         </div>
       </div>
 		);
