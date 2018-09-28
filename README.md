@@ -62,7 +62,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Acknowledgments
 
-# This project was completed with the help of:
+### This project was completed with the help of:
 
 - Ryan Waite's walkthrough on YouTube: https://www.youtube.com/watch?v=acJHkd6K5kI&t=2550s
 
@@ -70,7 +70,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 - techsith's YouTube video on PureComponents: https://www.youtube.com/watch?v=PXXjkq4A-OU
 
-# This project uses:
+### This project uses:
 
 - React
 - Debouncing from Lodash
